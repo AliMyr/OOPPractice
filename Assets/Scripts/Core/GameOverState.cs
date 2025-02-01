@@ -5,8 +5,8 @@ public class GameOverState : IGameState
     public void Enter()
     {
         Debug.Log("Entering Game Over State");
-        // Здесь можно включить UI Game Over, остановить игру и т.д.
-        Time.timeScale = 0f;  // Пример: ставим игру на паузу
+        Time.timeScale = 0f;  // Ставим игру на паузу
+        GameEvents.GameOver(); // Уведомляем все подписанные системы, что игра окончена
     }
 
     public void Exit()
@@ -17,6 +17,6 @@ public class GameOverState : IGameState
 
     public void Update()
     {
-        // Можно добавить проверку на перезапуск игры или переход в меню
+        // Здесь можно добавить логику, например, ожидание нажатия кнопки для перезапуска
     }
 }

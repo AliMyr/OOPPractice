@@ -2,12 +2,17 @@ using System;
 
 public static class GameEvents
 {
-    // Событие, которое срабатывает, когда враг убит
+    // Уже существующее событие для убийства врагов
     public static event Action OnEnemyKilled;
-
-    // Метод для вызова события, проверяем, что подписчики есть
     public static void EnemyKilled()
     {
         OnEnemyKilled?.Invoke();
+    }
+
+    // Новое событие для Game Over
+    public static event Action OnGameOver;
+    public static void GameOver()
+    {
+        OnGameOver?.Invoke();
     }
 }
