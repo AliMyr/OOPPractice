@@ -3,8 +3,8 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     private IMovable movable;
-    private IDamageable damageable; // Наш враг тоже может получать урон
-    public Transform target;       // Цель (игрок), к которой будем двигаться
+    private IDamageable damageable;
+    public Transform target;
     public float attackRange = 1.5f;
     public int attackDamage = 10;
     public float attackCooldown = 1.0f;
@@ -14,14 +14,17 @@ public class EnemyController : MonoBehaviour
     {
         movable = GetComponent<IMovable>();
         if (movable == null)
-        {
             Debug.LogError("Enemy " + gameObject.name + " не имеет компонента, реализующего IMovable!");
-        }
 
         damageable = GetComponent<IDamageable>();
         if (damageable == null)
-        {
             Debug.LogError("Enemy " + gameObject.name + " не имеет компонента, реализующего IDamageable!");
+
+        // Подписываемся на событие смерти, если есть компонент Health
+        var health = GetComponent<Health>();
+        if (health != null)
+        {
+            health.OnDied += () => { GameEvents.EnemyKilled(); };
         }
     }
 
@@ -37,7 +40,7 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
-                return; // Ничего не делаем, если игрока нет
+                return;
             }
         }
 
@@ -45,11 +48,10 @@ public class EnemyController : MonoBehaviour
         Vector3 direction = (target.position - transform.position).normalized;
         movable.Move(direction);
 
-        // Пытаемся атаковать, если находимся в пределах атаки
+        // Пытаемся атаковать, если в пределах досягаемости
         attackTimer += Time.deltaTime;
         if (Vector3.Distance(transform.position, target.position) <= attackRange && attackTimer >= attackCooldown)
         {
-            // Получаем интерфейс у игрока для нанесения урона
             IDamageable targetDamageable = target.GetComponent<IDamageable>();
             if (targetDamageable != null)
             {
