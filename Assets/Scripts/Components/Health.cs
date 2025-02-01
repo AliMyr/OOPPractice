@@ -6,13 +6,14 @@ public class Health : MonoBehaviour, IDamageable
     public int MaxHealth = 100;
     private int currentHealth;
 
-    // Событие, которое сигнализирует об изменении здоровья
+    // Событие, оповещающее об изменении здоровья
     public event Action<int> OnHealthChanged;
+    // Событие, оповещающее о смерти
+    public event Action OnDied;
 
     private void Awake()
     {
         currentHealth = MaxHealth;
-        // Немного багфикс: сразу уведомляем о начальном значении
         OnHealthChanged?.Invoke(currentHealth);
     }
 
@@ -20,7 +21,6 @@ public class Health : MonoBehaviour, IDamageable
     {
         currentHealth -= damage;
         Debug.Log($"{gameObject.name} получил {damage} урона. Текущее здоровье: {currentHealth}");
-        // Сообщаем об изменении здоровья
         OnHealthChanged?.Invoke(currentHealth);
 
         if (currentHealth <= 0)
@@ -32,6 +32,7 @@ public class Health : MonoBehaviour, IDamageable
     private void Die()
     {
         Debug.Log($"{gameObject.name} умер!");
+        OnDied?.Invoke();
         Destroy(gameObject);
     }
 }

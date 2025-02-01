@@ -1,39 +1,39 @@
 using UnityEngine;
+using Zenject;
 
 public class PlayerController : MonoBehaviour
 {
     private IMovable movable;
     private IDamageable damageable;
+    private IInputService inputService;
+
+    [Inject]
+    public void Construct(IInputService input)
+    {
+        inputService = input;
+    }
 
     private void Awake()
     {
-        // Получаем компоненты через интерфейсы, что соответствует принципу DIP
         movable = GetComponent<IMovable>();
         if (movable == null)
-        {
-            Debug.LogError("Компонент, реализующий IMovable, отсутствует на " + gameObject.name);
-        }
+            Debug.LogError("IMovable отсутствует на " + gameObject.name);
 
         damageable = GetComponent<IDamageable>();
         if (damageable == null)
-        {
-            Debug.LogError("Компонент, реализующий IDamageable, отсутствует на " + gameObject.name);
-        }
+            Debug.LogError("IDamageable отсутствует на " + gameObject.name);
     }
 
     private void Update()
     {
-        // Обработка ввода для движения
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
-        Vector3 input = new Vector3(h, 0, v);
-
-        if (input.sqrMagnitude > 0.01f)
+        // Получаем направление ввода через DI-сервис
+        Vector3 inputDirection = inputService.GetInputDirection();
+        if (inputDirection.sqrMagnitude > 0.01f)
         {
-            movable.Move(input.normalized);
+            movable.Move(inputDirection.normalized);
         }
 
-        // Для демонстрации: нажми клавишу H, чтобы нанести игроку 10 урона
+        // Пример: нажали клавишу для нанесения урона (для теста)
         if (Input.GetKeyDown(KeyCode.H))
         {
             damageable.TakeDamage(10);

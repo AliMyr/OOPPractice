@@ -5,14 +5,13 @@ public class GameInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        // Пример биндинга менеджера состояний как синглтона
+        // Привязываем менеджер состояний как синглтон
         Container.Bind<GameStateManager>().FromComponentInHierarchy().AsSingle();
 
-        // Если есть глобальные сервисы, их можно зарегать так:
-        // Container.Bind<IInputService>().To<InputService>().AsSingle();
-        // Container.Bind<IUIManager>().To<UIManager>().AsSingle();
+        // Биндим InputService: ищем его в иерархии и регистрируем как IInputService
+        Container.Bind<IInputService>().FromComponentInHierarchy().AsSingle();
 
-        // Для примера, пусть PlayingState создаётся как transient (новый экземпляр каждый раз)
+        // Пример биндинга игрового состояния PlayingState (если нужно)
         Container.Bind<IGameState>().To<PlayingState>().AsTransient();
     }
 }
