@@ -14,5 +14,8 @@ public class GameInstaller : MonoInstaller
 
         // ƒругие биндинги, например, дл€ игровых состо€ний
         Container.Bind<IGameState>().To<PlayingState>().AsTransient();
+
+        Container.Bind<SaveManager>().FromComponentInHierarchy().AsSingle();
+
     }
 }
