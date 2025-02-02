@@ -634,7 +634,6 @@ GameObject:
   - component: {fileID: 353197872}
   - component: {fileID: 353197875}
   - component: {fileID: 353197874}
-  - component: {fileID: 353197873}
   m_Layer: 0
   m_Name: Glasses
   m_TagString: Untagged
@@ -657,27 +656,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1700338809}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &353197873
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 353197871}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &353197874
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2000,7 +1978,6 @@ GameObject:
   - component: {fileID: 1076666369}
   - component: {fileID: 1076666372}
   - component: {fileID: 1076666371}
-  - component: {fileID: 1076666370}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -2023,29 +2000,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1700338809}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &1076666370
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1076666368}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1076666371
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2647,6 +2601,7 @@ GameObject:
   - component: {fileID: 1700338811}
   - component: {fileID: 1700338812}
   - component: {fileID: 1700338813}
+  - component: {fileID: 1700338814}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2762,6 +2717,24 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1700338814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700338805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9470b2a9c51560041a7c70b1e241a0de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityRadius: 7
+  abilityDamage: 50
+  abilityCooldown: 10
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &1764486371
 GameObject:
   m_ObjectHideFlags: 0
