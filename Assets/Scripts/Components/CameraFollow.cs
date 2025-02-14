@@ -14,7 +14,7 @@ public class CameraFollow : MonoBehaviour
     {
         if (target == null)
         {
-            Debug.LogWarning("CameraFollow: target не назначен!");
+            //Debug.LogWarning("CameraFollow: target не назначен!");
             return;
         }
 
