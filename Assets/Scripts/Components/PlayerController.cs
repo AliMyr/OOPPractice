@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour
     private IDamageable damageable;
     private IInputService inputService;
 
+    // Скорость поворота в градусах в секунду
+    public float rotationSpeed = 720f;
+
     [Inject]
     public void Construct(IInputService input)
     {
@@ -28,12 +31,22 @@ public class PlayerController : MonoBehaviour
     {
         // Получаем направление ввода через DI-сервис
         Vector3 inputDirection = inputService.GetInputDirection();
+
         if (inputDirection.sqrMagnitude > 0.01f)
         {
-            movable.Move(inputDirection.normalized);
+            // Нормализуем направление движения
+            Vector3 moveDir = inputDirection.normalized;
+
+            // Двигаем персонажа
+            movable.Move(moveDir);
+
+            // Вычисляем целевой поворот на основе направления движения
+            Quaternion targetRotation = Quaternion.LookRotation(moveDir, Vector3.up);
+            // Плавно поворачиваем текущую ориентацию в сторону целевого поворота
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
-        // Пример: нажали клавишу для нанесения урона (для теста)
+        // Пример: нажали клавишу H для нанесения урона (тестовый вызов)
         if (Input.GetKeyDown(KeyCode.H))
         {
             damageable.TakeDamage(10);
