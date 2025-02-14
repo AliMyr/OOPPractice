@@ -48,6 +48,13 @@ public class PlayerAutoAttack : MonoBehaviour, IAttacker
         }
     }
 
+    public void IncreaseDamage(int additionalDamage)
+    {
+        attackDamage += additionalDamage;
+        Debug.Log($"{gameObject.name}: автоатака улучшена. Новый урон: {attackDamage}");
+    }
+
+
     // Для визуализации радиуса атаки в редакторе.
     private void OnDrawGizmosSelected()
     {

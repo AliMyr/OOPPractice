@@ -52,10 +52,25 @@ public class PlayerSpecialAbility : MonoBehaviour, ISpecialAbility
         // Здесь можно добавить вызов анимаций, звуковых эффектов и визуальных эффектов.
     }
 
+    public void IncreaseDamage(int additionalDamage)
+    {
+        abilityDamage += additionalDamage;
+        Debug.Log($"{gameObject.name}: специальная способность улучшена. Новый урон: {abilityDamage}");
+    }
+
+    // Можно добавить метод для уменьшения кулдауна, если нужно:
+    public void ReduceCooldown(float reduction)
+    {
+        abilityCooldown = Mathf.Max(0.1f, abilityCooldown - reduction);
+        Debug.Log($"{gameObject.name}: кулдаун специальной способности уменьшен. Новый кулдаун: {abilityCooldown}");
+    }
+
+
     // Для визуализации радиуса действия в редакторе
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, abilityRadius);
     }
+
 }

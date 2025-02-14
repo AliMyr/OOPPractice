@@ -13,6 +13,21 @@ public class PlayerProgression : MonoBehaviour
     // Событие, которое уведомляет об увеличении уровня
     public event Action<int> OnLevelUp;
 
+    private void Start()
+    {
+        PlayerProgression progression = FindObjectOfType<PlayerProgression>();
+        AbilityUpgradeManager upgradeManager = FindObjectOfType<AbilityUpgradeManager>();
+        if (upgradeManager != null && progression != null)
+        {
+            upgradeManager.Initialize(progression);
+        }
+        else
+        {
+            Debug.LogError("Не удалось найти AbilityUpgradeManager или PlayerProgression!");
+        }
+    }
+
+
     /// <summary>
     /// Добавляем опыт. Если накопилось достаточно, выполняем повышение уровня.
     /// </summary>
