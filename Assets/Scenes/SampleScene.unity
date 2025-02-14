@@ -3141,6 +3141,7 @@ GameObject:
   - component: {fileID: 1700338812}
   - component: {fileID: 1700338813}
   - component: {fileID: 1700338814}
+  - component: {fileID: 1700338815}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3203,6 +3204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4dacf9ab8685ca46bf69dab4ff06b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 720
 --- !u!114 &1700338811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3274,6 +3276,22 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8
+--- !u!114 &1700338815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700338805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd4c780517ba7034884ce02b09e039eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashSpeed: 20
+  dashDuration: 0.2
+  dashCooldown: 1
+  dashKey: 304
 --- !u!1 &1764486371
 GameObject:
   m_ObjectHideFlags: 0
