@@ -11,19 +11,38 @@ public class PlayerSpecialAbility : MonoBehaviour, ISpecialAbility
     public float abilityCooldown = 10f;
     [Tooltip("Слой, на котором находятся враги.")]
     public LayerMask enemyLayer;
+    [Tooltip("Стоимость активации способности в стамине.")]
+    public float staminaCost = 30f;
 
     // Таймер для отслеживания кулдауна
     private float abilityTimer = 0f;
+    private Stamina stamina;
+
+    private void Awake()
+    {
+        // Пытаемся получить компонент стамины с игрока
+        stamina = GetComponent<Stamina>();
+        if (stamina == null)
+            Debug.LogWarning($"{gameObject.name}: Стамина не найдена! Способность не сможет расходовать стамину.");
+    }
 
     private void Update()
     {
         // Обновляем таймер кулдауна
         abilityTimer += Time.deltaTime;
 
-        // Если нажата клавиша (например, пробел) и кулдаун истёк, активируем способность
+        // Если нажата клавиша (например, пробел) и кулдаун истёк
         if (Input.GetKeyDown(KeyCode.Space) && abilityTimer >= abilityCooldown)
         {
-            Activate();
+            // Проверяем, достаточно ли стамины
+            if (stamina != null && stamina.ConsumeStamina(staminaCost))
+            {
+                Activate();
+            }
+            else
+            {
+                Debug.Log("Недостаточно стамины для активации специальной способности!");
+            }
         }
     }
 
@@ -52,19 +71,31 @@ public class PlayerSpecialAbility : MonoBehaviour, ISpecialAbility
         // Здесь можно добавить вызов анимаций, звуковых эффектов и визуальных эффектов.
     }
 
+    /// <summary>
+    /// Позволяет увеличить урон способности.
+    /// </summary>
     public void IncreaseDamage(int additionalDamage)
     {
         abilityDamage += additionalDamage;
         Debug.Log($"{gameObject.name}: специальная способность улучшена. Новый урон: {abilityDamage}");
     }
 
-    // Можно добавить метод для уменьшения кулдауна, если нужно:
+    /// <summary>
+    /// Позволяет уменьшить кулдаун способности.
+    /// </summary>
     public void ReduceCooldown(float reduction)
     {
         abilityCooldown = Mathf.Max(0.1f, abilityCooldown - reduction);
         Debug.Log($"{gameObject.name}: кулдаун специальной способности уменьшен. Новый кулдаун: {abilityCooldown}");
     }
 
+    /// <summary>
+    /// Возвращает прогресс кулдауна (от 0 до 1).
+    /// </summary>
+    public float GetCooldownProgress()
+    {
+        return Mathf.Clamp01(abilityTimer / abilityCooldown);
+    }
 
     // Для визуализации радиуса действия в редакторе
     private void OnDrawGizmosSelected()
@@ -72,5 +103,4 @@ public class PlayerSpecialAbility : MonoBehaviour, ISpecialAbility
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, abilityRadius);
     }
-
 }
